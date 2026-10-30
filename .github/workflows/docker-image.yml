@@ -12,9 +12,7 @@ jobs:
 
     runs-on: ubuntu-latest 
 
- 
-
-    steps:
+    steps: 
     - uses: actions/checkout@v4 
     - name: docker login 
       env: 
@@ -23,7 +21,7 @@ jobs:
       run: | 
         docker login -u $DOCKER_USER -p $DOCKER_PASS 
     - name: Build the Docker image 
-      run: docker build . --file Dockerfile --tag misja117/docker-gcp-arq 
-      
+      run: docker build randomquotes --file randomquotes/Dockerfile --tag misja117/docker-gcp-arq:latest 
+       
     - name: Docker Push 
       run: docker push misja117/docker-gcp-arq 
