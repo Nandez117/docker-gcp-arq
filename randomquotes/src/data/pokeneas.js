@@ -1,4 +1,4 @@
-const BUCKET_URL = process.env.BUCKET_URL || "https://storage.googleapis.com/pokeneas-bucket-misja117";
+const BUCKET_URL = process.env.BUCKET_URL || "https://storage.googleapis.com/pokeneas-arq";
 
 const pokeneas = [
   {
