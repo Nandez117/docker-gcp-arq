@@ -7,9 +7,7 @@ on:
     branches: [ main ] 
 
 jobs: 
-
   build: 
-
     runs-on: ubuntu-latest 
 
     steps: 
@@ -21,7 +19,7 @@ jobs:
       run: | 
         docker login -u $DOCKER_USER -p $DOCKER_PASS 
     - name: Build the Docker image 
-      run: docker build randomquotes --file randomquotes/Dockerfile --tag misja117/docker-gcp-arq:latest 
+      run: docker build randomquotes --file randomquotes/Dockerfile --tag misja117/pokeneas:latest 
        
     - name: Docker Push 
-      run: docker push misja117/docker-gcp-arq 
+      run: docker push misja117/pokeneas:latest
