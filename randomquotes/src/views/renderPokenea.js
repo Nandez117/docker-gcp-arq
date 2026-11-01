@@ -176,7 +176,7 @@ function renderPokeneaHTML(pokenea, containerId) {
     </div>
     <h1>${pokenea.nombre}</h1>
     <div class="img-container">
-      <img src="${pokenea.imagen}" alt="${pokenea.nombre}" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokenea.id * 3}.png';" />
+      <img src="${pokenea.imagen}" alt="${pokenea.nombre}" onerror="this.onerror=null; this.src='https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokenea.pokemonId || 25}.png';" />
     </div>
     <blockquote>"${pokenea.fraseFilosofica}"</blockquote>
     <div class="container-info">
