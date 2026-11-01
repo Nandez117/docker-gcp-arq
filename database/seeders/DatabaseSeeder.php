@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 use App\Models\Comment;
+use App\Models\Human;
 use App\Models\Product;
 use App\Models\User;
 use Illuminate\Database\Seeder;
@@ -16,6 +17,7 @@ class DatabaseSeeder extends Seeder
     {
         Product::factory(8)->create();
         Comment::factory(24)->create();
+        Human::factory(5)->create();
 
         User::factory()->create([
             'name' => 'Test User',

@@ -2,25 +2,35 @@
 
 namespace App\Models;
 
+use Database\Factories\HumanFactory;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Support\Carbon;
 
-/**
- * Human Model
- *
- * @property int $id
- * @property string $name
- * @property int $aura
- * @property string $hierarchy
- * @property Carbon|null $created_at
- * @property Carbon|null $updated_at
- */
 class Human extends Model
 {
+    /** @use HasFactory<HumanFactory> */
+    use HasFactory;
+
+    /**
+     * HUMAN ATTRIBUTES
+     * $this->attributes['id'] - int - contains the human primary key (id)
+     * $this->attributes['name'] - string - contains the human name
+     * $this->attributes['aura'] - int - contains the human aura amount
+     * $this->attributes['hierarchy'] - string - contains the human hierarchy (común, moderado, legendario)
+     * $this->attributes['created_at'] - Carbon - contains the creation timestamp
+     * $this->attributes['updated_at'] - Carbon - contains the update timestamp
+     */
     protected $fillable = [
         'name',
         'aura',
         'hierarchy',
+    ];
+
+    protected $guarded = [
+        'id',
+        'created_at',
+        'updated_at',
     ];
 
     public function getId(): int
@@ -71,5 +81,16 @@ class Human extends Model
     public function getUpdatedAt(): ?string
     {
         return isset($this->attributes['updated_at']) ? (string) $this->attributes['updated_at'] : null;
+    }
+
+    public static function determineBattleWinner(Human $human1, Human $human2): string
+    {
+        if ($human1->getAura() > $human2->getAura()) {
+            return '¡Ganador: '.$human1->getName().'!';
+        } elseif ($human2->getAura() > $human1->getAura()) {
+            return '¡Ganador: '.$human2->getName().'!';
+        }
+
+        return '¡Es un empate!';
     }
 }

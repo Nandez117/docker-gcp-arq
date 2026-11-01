@@ -11,7 +11,10 @@ class ImageNotDIController extends Controller
 {
     public function index(): View
     {
-        return view('imagenotdi.index');
+        $viewData = [];
+        $viewData['title'] = __('Image Storage - Not DI');
+
+        return view('imagenotdi.index')->with('viewData', $viewData);
     }
 
     public function save(Request $request): RedirectResponse

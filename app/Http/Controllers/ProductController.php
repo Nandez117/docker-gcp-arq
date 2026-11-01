@@ -2,7 +2,6 @@
 
 namespace App\Http\Controllers;
 
-use App\Http\Requests\ProductSaveRequest;
 use App\Models\Product;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\View\View;
@@ -12,6 +11,8 @@ class ProductController extends Controller
     public function index(): View
     {
         $viewData = [];
+        $viewData['title'] = __('Products - Online Store');
+        $viewData['subtitle'] = __('List of products');
         $viewData['products'] = Product::with('comments')->get();
 
         return view('product.index')->with('viewData', $viewData);
@@ -24,21 +25,10 @@ class ProductController extends Controller
         // Find or fail is allowed, zero Route Model Binding
         $product = Product::with('comments')->findOrFail($id);
 
+        $viewData['title'] = $product->getName().' - '.__('Online Store');
+        $viewData['subtitle'] = $product->getName().' - '.__('Product information');
         $viewData['product'] = $product;
 
         return view('product.show')->with('viewData', $viewData);
-    }
-
-    public function create(): View
-    {
-        return view('product.create');
-    }
-
-    public function save(ProductSaveRequest $request): View
-    {
-        // Validation handled by Form Request
-        Product::create($request->validated());
-
-        return view('product.success');
     }
 }

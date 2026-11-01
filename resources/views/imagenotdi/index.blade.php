@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', __('Image Storage - Not DI'))
+@section('title', $viewData['title'])
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -22,4 +22,3 @@
     </div>
 </div>
 @endsection
-

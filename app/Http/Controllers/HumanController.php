@@ -12,7 +12,7 @@ class HumanController extends Controller
     public function home(): View
     {
         $viewData = [];
-        $viewData['title'] = 'Zona de Inicio - Humanos';
+        $viewData['title'] = __('Zona de Inicio - Humanos');
 
         return view('human.home')->with('viewData', $viewData);
     }
@@ -20,7 +20,7 @@ class HumanController extends Controller
     public function create(): View
     {
         $viewData = [];
-        $viewData['title'] = 'Registrar Humano';
+        $viewData['title'] = __('Registrar Humano');
 
         return view('human.create')->with('viewData', $viewData);
     }
@@ -39,7 +39,7 @@ class HumanController extends Controller
     public function index(): View
     {
         $viewData = [];
-        $viewData['title'] = 'Lista de Humanos';
+        $viewData['title'] = __('Lista de Humanos');
         $viewData['humans'] = Human::orderBy('aura', 'desc')->get();
 
         return view('human.index')->with('viewData', $viewData);
@@ -48,25 +48,14 @@ class HumanController extends Controller
     public function battle(): View
     {
         $viewData = [];
-        $viewData['title'] = 'Batalla de Humanos';
+        $viewData['title'] = __('Batalla de Humanos');
         $humans = Human::orderBy('id')->take(2)->get();
         $viewData['humans'] = $humans;
 
-        $winnerMessage = 'Faltan humanos para la batalla.';
-
-        if ($humans->count() == 2) {
-            $human1 = $humans[0];
-            $human2 = $humans[1];
-
-            if ($human1->getAura() > $human2->getAura()) {
-                $winnerMessage = '¡Ganador: '.$human1->getName().'!';
-            } elseif ($human2->getAura() > $human1->getAura()) {
-                $winnerMessage = '¡Ganador: '.$human2->getName().'!';
-            } else {
-                $winnerMessage = '¡Es un empate!';
-            }
+        $winnerMessage = __('Faltan humanos para la batalla.');
+        if ($humans->count() === 2) {
+            $winnerMessage = Human::determineBattleWinner($humans[0], $humans[1]);
         }
-
         $viewData['winnerMessage'] = $winnerMessage;
 
         return view('human.battle')->with('viewData', $viewData);

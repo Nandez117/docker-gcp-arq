@@ -6,6 +6,7 @@ use Illuminate\Database\Eloquent\Collection;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Carbon;
 
 class Product extends Model
 {
@@ -16,9 +17,13 @@ class Product extends Model
      * $this->attributes['id'] - int - contains the product primary key (id)
      * $this->attributes['name'] - string - contains the product name
      * $this->attributes['price'] - int - contains the product price
+     * $this->attributes['created_at'] - Carbon - contains the creation timestamp
+     * $this->attributes['updated_at'] - Carbon - contains the update timestamp
      * $this->comments - Comment[] - contains the associated comments
      */
     protected $fillable = ['name', 'price'];
+
+    protected $guarded = ['id', 'created_at', 'updated_at'];
 
     public function getId(): int
     {
@@ -48,6 +53,16 @@ class Product extends Model
     public function setPrice(int $price): void
     {
         $this->attributes['price'] = $price;
+    }
+
+    public function getCreatedAt(): ?string
+    {
+        return isset($this->attributes['created_at']) ? (string) $this->attributes['created_at'] : null;
+    }
+
+    public function getUpdatedAt(): ?string
+    {
+        return isset($this->attributes['updated_at']) ? (string) $this->attributes['updated_at'] : null;
     }
 
     public function comments(): HasMany

@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('title', __('Cart - Online Store'))
-@section('subtitle', __('Shopping Cart'))
+@section('title', $viewData['title'])
+@section('subtitle', $viewData['subtitle'])
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -35,4 +35,3 @@
     </div>
 </div>
 @endsection
-

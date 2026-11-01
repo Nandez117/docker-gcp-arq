@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminProductController;
 use App\Http\Controllers\CartController;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\HumanController;
@@ -13,9 +14,13 @@ Route::get('/about', [HomeController::class, 'about'])->name('home.about');
 Route::get('/contact', [HomeController::class, 'contact'])->name('home.contact');
 
 Route::get('/products', [ProductController::class, 'index'])->name('product.index');
-Route::get('/products/create', [ProductController::class, 'create'])->name('product.create');
-Route::post('/products/save', [ProductController::class, 'save'])->name('product.save');
 Route::get('/products/{id}', [ProductController::class, 'show'])->name('product.show');
+
+Route::get('/admin/products/create', [AdminProductController::class, 'create'])->name('admin.product.create');
+Route::post('/admin/products/save', [AdminProductController::class, 'save'])->name('admin.product.save');
+
+Route::get('/products/create', [AdminProductController::class, 'create'])->name('product.create');
+Route::post('/products/save', [AdminProductController::class, 'save'])->name('product.save');
 
 Route::get('/cart', [CartController::class, 'index'])->name('cart.index');
 Route::get('/cart/add/{id}', [CartController::class, 'add'])->name('cart.add');

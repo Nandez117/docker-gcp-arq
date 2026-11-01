@@ -11,7 +11,10 @@ class ImageController extends Controller
 {
     public function index(): View
     {
-        return view('image.index');
+        $viewData = [];
+        $viewData['title'] = __('Image Storage - DI');
+
+        return view('image.index')->with('viewData', $viewData);
     }
 
     public function save(Request $request): RedirectResponse

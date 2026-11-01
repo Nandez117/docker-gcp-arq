@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
@@ -8,7 +8,6 @@
     <title>@yield('title', __('Online Store'))</title>
 </head>
 <body>
-    <!-- header -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-secondary py-4">
         <div class="container">
             <a class="navbar-brand" href="{{ route('home.index') }}">{{ __('Online Store') }}</a>
@@ -21,8 +20,8 @@
                     <a class="nav-link active" href="{{ route('home.index') }}">{{ __('Home') }}</a>
                     <a class="nav-link active" href="{{ route('home.about') }}">{{ __('About') }}</a>
                     <a class="nav-link active" href="{{ route('product.index') }}">{{ __('Products') }}</a>
-                    <a class="nav-link active" href="{{ route('humans.home') }}">Zona Humanos</a>
-                    <a class="nav-link active" href="{{ route('product.create') }}">{{ __('Create Products') }}</a>
+                    <a class="nav-link active" href="{{ route('humans.home') }}">{{ __('Humans') }}</a>
+                    <a class="nav-link active" href="{{ route('admin.product.create') }}">{{ __('Create Products') }}</a>
                     <a class="nav-link active" href="{{ route('home.contact') }}">{{ __('Contact') }}</a>
                 </div>
             </div>
@@ -34,26 +33,22 @@
             <h2>@yield('subtitle', __('A Laravel EAFIT App'))</h2>
         </div>
     </header>
-    <!-- header -->
 
     <div class="container my-4">
         @yield('content')
     </div>
 
-    <!-- footer -->
     <div class="copyright py-4 text-center text-white">
         <div class="container">
             <small>
-                Copyright - <a class="text-reset fw-bold text-decoration-none" target="_blank"
+                {{ __('Copyright') }} - <a class="text-reset fw-bold text-decoration-none" target="_blank"
                     href="https://twitter.com/danielgarax">
                     Daniel Correa
                 </a>
             </small>
         </div>
     </div>
-    <!-- footer -->
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js" crossorigin="anonymous"></script>
 </body>
 </html>
-

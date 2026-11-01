@@ -1,16 +1,16 @@
 @extends('layouts.app')
-@section('title', $viewData["title"])
+@section('title', $viewData['title'])
 @section('content')
 <div class="container mt-5">
-    <h2>Listado de Humanos Farmeadores</h2>
+    <h2>{{ __('Listado de Humanos Farmeadores') }}</h2>
     
     <table class="table table-bordered table-striped mt-3">
         <thead>
             <tr>
-                <th>ID</th>
-                <th>Nombre</th>
-                <th>Aura</th>
-                <th>Jerarquia</th>
+                <th>{{ __('ID') }}</th>
+                <th>{{ __('Nombre') }}</th>
+                <th>{{ __('Aura') }}</th>
+                <th>{{ __('Jerarquía') }}</th>
             </tr>
         </thead>
         <tbody>
@@ -20,7 +20,7 @@
                 <td>
                     {{ $human->getName() }}
                     @if($human->getHierarchy() === 'legendario')
-                        <span class="badge bg-warning text-dark">Boff</span>
+                        <span class="badge bg-warning text-dark">{{ __('Boff') }}</span>
                     @endif
                 </td>
                 <td>
@@ -35,6 +35,6 @@
             @endforeach
         </tbody>
     </table>
-    <a href="{{ route('humans.home') }}" class="btn btn-secondary">Volver</a>
+    <a href="{{ route('humans.home') }}" class="btn btn-secondary">{{ __('Volver') }}</a>
 </div>
 @endsection

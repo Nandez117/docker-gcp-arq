@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('title', __('Products - Online Store'))
-@section('subtitle', __('List of products'))
+@section('title', $viewData['title'])
+@section('subtitle', $viewData['subtitle'])
 @section('content')
 <div class="row">
     @foreach ($viewData['products'] as $product)
@@ -16,4 +16,3 @@
     @endforeach
 </div>
 @endsection
-

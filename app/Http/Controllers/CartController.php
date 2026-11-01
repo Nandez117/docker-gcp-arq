@@ -21,6 +21,8 @@ class CartController extends Controller
         }
 
         $viewData = [];
+        $viewData['title'] = __('Cart - Online Store');
+        $viewData['subtitle'] = __('Shopping Cart');
         $viewData['products'] = $products;
         $viewData['cartProducts'] = $cartProducts;
 

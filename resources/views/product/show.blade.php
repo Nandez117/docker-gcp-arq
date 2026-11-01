@@ -1,6 +1,6 @@
 @extends('layouts.app')
-@section('title', $viewData['product']->getName() . ' - ' . __('Online Store'))
-@section('subtitle', $viewData['product']->getName() . ' - ' . __('Product information'))
+@section('title', $viewData['title'])
+@section('subtitle', $viewData['subtitle'])
 @section('content')
 <div class="card mb-3">
     <div class="row g-0">
@@ -11,7 +11,7 @@
             <div class="card-body">
                 <h5 class="card-title">
                     @if ($viewData['product']->getPrice() > 80)
-                        <span style="color: red;">{{ $viewData['product']->getName() }}</span>
+                        <span class="text-danger">{{ $viewData['product']->getName() }}</span>
                     @else
                         {{ $viewData['product']->getName() }}
                     @endif
@@ -28,4 +28,3 @@
     </div>
 </div>
 @endsection
-

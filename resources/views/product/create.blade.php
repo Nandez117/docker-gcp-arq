@@ -1,5 +1,5 @@
 @extends('layouts.app')
-@section('title', __('Create product'))
+@section('title', $viewData['title'])
 @section('content')
 <div class="container">
     <div class="row justify-content-center">
@@ -14,7 +14,7 @@
                         @endforeach
                     </ul>
                     @endif
-                    <form method="POST" action="{{ route('product.save') }}">
+                    <form method="POST" action="{{ route('admin.product.save') }}">
                         @csrf
                         <input type="text" class="form-control mb-2" placeholder="{{ __('Enter name') }}" name="name" value="{{ old('name') }}" />
                         <input type="text" class="form-control mb-2" placeholder="{{ __('Enter price') }}" name="price" value="{{ old('price') }}" />
@@ -26,4 +26,3 @@
     </div>
 </div>
 @endsection
-
