@@ -1,58 +1,71 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Pokeneas - Pokedex en Express
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Aplicación web en Node.js/Express que expone una "Pokedex" de **Pokeneas** (criaturas nacidas en Antioquia). Pensada para desplegarse en contenedores Docker sobre un cluster de Docker Swarm en GCP.
 
-## About Laravel
+## Características
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- Catálogo de 8 Pokeneas en un arreglo en memoria (sin base de datos).
+- Cada Pokenea tiene: `id`, `nombre`, `altura`, `habilidad`, `imagen` y `fraseFilosofica`.
+- Las imágenes se sirven desde un bucket de Google Cloud Storage.
+- Muestra el `id` del contenedor (`os.hostname()`) para verificar el balanceo entre réplicas de Swarm.
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Estructura del proyecto
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
-
-## Learning Laravel
-
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
-
-In addition, [Laracasts](https://laracasts.com) contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
-
-You can also watch bite-sized lessons with real-world projects on [Laravel Learn](https://laravel.com/learn), where you will be guided through building a Laravel application from scratch while learning PHP fundamentals.
-
-## Agentic Development
-
-Laravel's predictable structure and conventions make it ideal for AI coding agents like Claude Code, Cursor, and GitHub Copilot. Install [Laravel Boost](https://laravel.com/docs/ai) to supercharge your AI workflow:
-
-```bash
-composer require laravel/boost --dev
-
-php artisan boost:install
+```
+.
+├── index.js                      # Punto de entrada (servidor Express)
+├── Dockerfile                    # Imagen de la aplicación
+├── package.json
+└── src
+    ├── controllers
+    │   └── pokeneaController.js   # Lógica de las rutas
+    ├── data
+    │   └── pokeneas.js            # Arreglo de Pokeneas
+    ├── routes
+    │   └── pokeneaRoutes.js       # Definición de rutas
+    └── views
+        └── renderPokenea.js       # Render del HTML de la vista
 ```
 
-Boost provides your agent 15+ tools and skills that help agents build Laravel applications while following best practices.
+## Rutas
 
-## Contributing
+| Método | Ruta            | Descripción                                                                 |
+|--------|-----------------|-----------------------------------------------------------------------------|
+| GET    | `/`             | Vista HTML con imagen y frase filosófica de un Pokenea aleatorio + container |
+| GET    | `/view`         | Alias de la vista HTML                                                        |
+| GET    | `/api`          | JSON con `id`, `nombre`, `altura`, `habilidad` y `containerId`               |
+| GET    | `/api/pokenea`  | Alias del JSON                                                               |
+| GET    | `/pokenea`      | Alias del JSON                                                               |
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+## Variables de entorno
 
-## Code of Conduct
+| Variable     | Por defecto                                          | Descripción                        |
+|--------------|------------------------------------------------------|------------------------------------|
+| `PORT`       | `80`                                                 | Puerto del servidor                |
+| `BUCKET_URL` | `https://storage.googleapis.com/pokeneas-arq`        | Base URL del bucket GCP de imágenes|
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+## Ejecutar en local
 
-## Security Vulnerabilities
+```bash
+npm install
+npm start
+# http://localhost:80
+```
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+## Docker
 
-## License
+```bash
+docker build -t pokeneas .
+docker run -p 80:80 pokeneas
+```
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+## Despliegue en Docker Swarm (GCP)
+
+En la instancia líder:
+
+```bash
+docker swarm init
+docker service create --name pokeneas --replicas 10 -p 80:80 <usuario-dockerhub>/pokeneas:latest
+```
+
+Las demás instancias se unen al cluster con el token entregado por `docker swarm join-token manager`.
