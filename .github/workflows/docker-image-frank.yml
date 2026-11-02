@@ -16,8 +16,8 @@ jobs:
           username: ${{ secrets.DOCKERHUB_USER_FRANK }}
           password: ${{ secrets.DOCKERHUB_PASS_FRANK }}
           
-      - name: Build the Docker image
-        run: docker build . --file Dockerfile --tag misjal17/docker-gcp-arq:latest
+      - name: Build the Docker image 
+        run: docker build . --file Dockerfile --tag misjal17/taller-2:latest
         
       - name: Docker Push
-        run: docker push misjal17/docker-gcp-arq:latest
+        run: docker push misjal17/taller-2:latest
