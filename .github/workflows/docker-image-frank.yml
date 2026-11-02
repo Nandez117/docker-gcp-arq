@@ -1,0 +1,23 @@
+name: Docker Image CI Frank
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build-and-push:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      
+      - name: docker login
+        uses: docker/login-action@v3
+        with:
+          username: ${{ secrets.DOCKERHUB_USER_FRANK }}
+          password: ${{ secrets.DOCKERHUB_PASS_FRANK }}
+          
+      - name: Build the Docker image
+        run: docker build . --file Dockerfile --tag misjal17/docker-gcp-arq:latest
+        
+      - name: Docker Push
+        run: docker push misjal17/docker-gcp-arq:latest
